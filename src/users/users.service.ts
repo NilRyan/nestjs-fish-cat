@@ -27,7 +27,7 @@ export class UsersService {
     return {
       name: 'Philip',
       email: 'philipcalape@gmail.com',
-      password: '123456',
+      password: '$2a$10$VbunJyso/iScp92zRroc6.TiK6FLUY2kRfNvWFANbwUbiyn3Emw16',
       birthDate: new Date(),
       aboutMe: 'I am a software developer',
       gender: Gender.Male,
@@ -39,7 +39,7 @@ export class UsersService {
     return {
       name: 'Philip',
       email: 'philipcalape@gmail.com',
-      password: '123456',
+      password: '$2a$10$VbunJyso/iScp92zRroc6.TiK6FLUY2kRfNvWFANbwUbiyn3Emw16',
       birthDate: new Date(),
       aboutMe: 'I am a software developer',
       gender: Gender.Male,
@@ -51,7 +51,7 @@ export class UsersService {
     return {
       name: 'Philip',
       email: 'philipcalape@gmail.com',
-      password: '123456',
+      password: '$2a$10$VbunJyso/iScp92zRroc6.TiK6FLUY2kRfNvWFANbwUbiyn3Emw16',
       birthDate: new Date(),
       aboutMe: 'I am a software developer',
       gender: Gender.Male,
