@@ -1,9 +1,9 @@
+import { UserProfileOutput } from './../../users/dto/user-profile.output';
 import { Args, Mutation, Resolver, Query } from '@nestjs/graphql';
 import { AuthService } from '../services/auth.service';
-import { RegisterUserInput } from '../../users/dto/register-user.input';
 import { LoginInput } from '../dto/login.input';
 import { AccessTokenOutput } from '../dto/access-token.output';
-import { User } from '../../users/models/user.model';
+import { RegisterUserInput } from '../../users/dto/register-user.input';
 
 @Resolver()
 export class AuthResolver {
@@ -14,7 +14,7 @@ export class AuthResolver {
     return this.authService.login(loginInput);
   }
 
-  @Mutation((returns) => User)
+  @Mutation((returns) => UserProfileOutput)
   register(@Args('registerUserInput') registerUserInput: RegisterUserInput) {
     return this.authService.register(registerUserInput);
   }

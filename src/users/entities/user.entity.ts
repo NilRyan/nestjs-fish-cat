@@ -26,7 +26,7 @@ export class UserEntity extends BaseModel {
   aboutMe: string;
 
   @Column()
-  naame: string;
+  name: string;
 
   @Column({ type: 'date' })
   birthDate: Date;
