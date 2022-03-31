@@ -52,14 +52,6 @@ export class AuthService {
     return { accessToken };
   }
 
-  // async getUserFromJwt(token: string) {
-  //   const { id } = this.jwtService.verify(token, {
-  //     secret: this.configService.get('JWT_SECRET'),
-  //   });
-  //   if (!id) throw new UnauthorizedException('Invalid token');
-  //   return await this.usersService.getUserById(id);
-  // }
-
   private async verifyPassword(
     plainTextPassword: string,
     hashedPassword: string,
