@@ -7,11 +7,11 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { RegisterUserInput } from '../../users/dto/register-user.input';
 import * as bcrypt from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
 import PostgresErrorCode from '../../database/enums/postgres-error-code.enum';
-import { UsersService } from '../../users/services/users.service';
+import { UsersService } from '../../users/users.service';
+import { RegisterUserInput } from '../../users/dto/register-user.input';
 @Injectable()
 export class AuthService {
   constructor(
@@ -23,7 +23,7 @@ export class AuthService {
   async register(registrationData: RegisterUserInput) {
     const hashedPassword = await bcrypt.hash(registrationData.password, 10);
     try {
-      const createdUser = await this.usersService.createUserWithWallet({
+      const createdUser = await this.usersService.createUser({
         ...registrationData,
         password: hashedPassword,
       });
@@ -46,8 +46,8 @@ export class AuthService {
     if (!user) throw new BadRequestException('Invalid credentials');
 
     await this.verifyPassword(password, user.password);
-    const { id, firstName, lastName, email } = user;
-    const payload = { id, username, firstName, lastName, email };
+    const { id, name, email } = user;
+    const payload = { id, name, email };
     const accessToken: string = await this.jwtService.signAsync(payload);
     return { accessToken };
   }

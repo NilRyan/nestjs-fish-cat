@@ -1,13 +1,13 @@
-import { RegisterUserInput } from '../../users/dto/register-user.input';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { Test } from '@nestjs/testing';
-import { UsersService } from '../../users/services/users.service';
 import { AuthService } from './auth.service';
 import { BadRequestException, UnauthorizedException } from '@nestjs/common';
 import { LoginInput } from '../dto/login.input';
 import PostgresErrorCode from '../../database/enums/postgres-error-code.enum';
 import Gender from '../../users/enums/gender.enum';
+import { RegisterUserInput } from '../../users/dto/register-user.input';
+import { UsersService } from '../../users/users.service';
 
 const mockConfigService = () => ({
   get(key: string) {
@@ -62,10 +62,8 @@ describe('Authentication Service', () => {
   describe('register', () => {
     it('returns the created UserEntity without the password', async () => {
       const registrationData: RegisterUserInput = {
-        username: 'philipcalape',
         password: 'password123',
-        firstName: 'Philip',
-        lastName: 'Calape',
+        name: 'Philip',
         email: 'randomemail@gmail.com',
         birthDate: new Date(),
         gender: Gender.Male,
@@ -84,10 +82,8 @@ describe('Authentication Service', () => {
 
       await expect(
         authService.register({
-          username: 'philipcalape',
           password: 'password123',
-          firstName: 'Philip',
-          lastName: 'Calape',
+          name: 'Calape',
           email: 'randomemail@gmail.com',
         } as RegisterUserInput),
       ).rejects.toThrow(BadRequestException);
