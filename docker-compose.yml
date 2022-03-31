@@ -6,6 +6,9 @@ services:
     ports:
     - "5435:5432"
     volumes:
-    - ./data/postgres:/data/asset
+    - pg:/data/asset
     env_file:
     - .env
+
+volumes:
+  pg:
