@@ -15,7 +15,9 @@ export class AuthResolver {
   }
 
   @Mutation((returns) => UserProfileOutput)
-  register(@Args('registerUserInput') registerUserInput: RegisterUserInput) {
+  register(
+    @Args('registerUserInput') registerUserInput: RegisterUserInput,
+  ): Promise<UserProfileOutput> {
     return this.authService.register(registerUserInput);
   }
 }

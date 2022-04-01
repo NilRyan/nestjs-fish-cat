@@ -38,19 +38,9 @@ input LoginInput {
 }
 
 type Mutation {
-  createUser(registerUserInput: RegisterUserInput!): UserProfileOutput!
   updateUser(updateUserInput: UpdateUserInput!): UserProfileOutput!
   removeUser(id: String!): UserProfileOutput!
   register(registerUserInput: RegisterUserInput!): UserProfileOutput!
-}
-
-input RegisterUserInput {
-  name: String!
-  email: String!
-  password: String!
-  birthDate: DateTime
-  gender: Gender
-  aboutMe: String!
 }
 
 input UpdateUserInput {
@@ -61,4 +51,13 @@ input UpdateUserInput {
   gender: Gender
   aboutMe: String
   id: ID!
+}
+
+input RegisterUserInput {
+  name: String!
+  email: String!
+  password: String!
+  birthDate: DateTime
+  gender: Gender
+  aboutMe: String!
 }
