@@ -1,12 +1,11 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { IsAlphanumeric, Length } from 'class-validator';
+import { Length } from 'class-validator';
 
 @InputType()
 export class LoginInput {
   @Field()
-  @IsAlphanumeric()
-  @Length(4, 20)
-  readonly username: string;
+  @Length(4, 254)
+  readonly email: string;
 
   @Field()
   @Length(6, 20)

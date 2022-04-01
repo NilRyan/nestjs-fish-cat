@@ -33,13 +33,12 @@ type Query {
 }
 
 input LoginInput {
-  username: String!
+  email: String!
   password: String!
 }
 
 type Mutation {
   updateUser(updateUserInput: UpdateUserInput!): UserProfileOutput!
-  removeUser(id: String!): UserProfileOutput!
   register(registerUserInput: RegisterUserInput!): UserProfileOutput!
 }
 

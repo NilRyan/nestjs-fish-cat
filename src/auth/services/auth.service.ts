@@ -41,12 +41,12 @@ export class AuthService {
   }
 
   async login(loginInput: LoginInput) {
-    const { username, password } = loginInput;
-    const user = await this.usersService.getUserByUsername(username);
+    const { email, password } = loginInput;
+    const user = await this.usersService.getUserByEmail(email);
     if (!user) throw new BadRequestException('Invalid credentials');
 
     await this.verifyPassword(password, user.password);
-    const { id, name, email } = user;
+    const { id, name } = user;
     const payload = { id, name, email };
     const accessToken: string = await this.jwtService.signAsync(payload);
     return { accessToken };

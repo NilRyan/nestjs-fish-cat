@@ -67,6 +67,7 @@ describe('Authentication Service', () => {
         email: 'randomemail@gmail.com',
         birthDate: new Date(),
         gender: Gender.Male,
+        aboutMe: 'mockaroo',
       };
       const expectedUser = { ...registrationData };
       usersService.createUserWithWallet.mockResolvedValue(expectedUser);
@@ -95,7 +96,7 @@ describe('Authentication Service', () => {
         username: 'neilryan',
         password: 'password123',
       };
-      usersService.getUserByUsername.mockResolvedValue({
+      usersService.getUserByEmail.mockResolvedValue({
         username: 'neilryan',
         password:
           '$2a$10$VbunJyso/iScp92zRroc6.TiK6FLUY2kRfNvWFANbwUbiyn3Emw16', // password hash of 'password123'
@@ -106,7 +107,7 @@ describe('Authentication Service', () => {
     });
 
     it('throws a 400 Bad Request if user does not exist in the database', async () => {
-      usersService.getUserByUsername.mockResolvedValue(null);
+      usersService.getUserByEmail.mockResolvedValue(null);
       const loginInput: LoginInput = {
         username: 'philipcalape',
         password: 'password123',
@@ -117,7 +118,7 @@ describe('Authentication Service', () => {
     });
 
     it('throws a 401 Exception if password is invalid', async () => {
-      usersService.getUserByUsername.mockResolvedValue({
+      usersService.getUserByEmail.mockResolvedValue({
         username: 'neilryan',
         password:
           '$2a$10$VbunJyso/iScp92zRroc6.TiK6FLUY2kRfNvWFANbwUbiyn3Emw16',

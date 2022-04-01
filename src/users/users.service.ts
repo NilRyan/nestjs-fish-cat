@@ -14,11 +14,19 @@ export class UsersService {
     return await this.usersRepository.createUser(registerUserInput);
   }
 
-  findAll() {
+  async findAll() {
     return `This action returns all users`;
   }
 
-  getUserById(id: string) {
+  async getUserById(id: string): Promise<UserEntity> {
+    return this.usersRepository.findOne(id);
+  }
+
+  async getUserByEmail(email: string) {
+    return this.usersRepository.findOne({ where: { email } });
+  }
+
+  async update(id: string, updateUserInput: UpdateUserInput) {
     return {
       name: 'Philip',
       email: 'philipcalape@gmail.com',
@@ -28,33 +36,5 @@ export class UsersService {
       gender: Gender.Male,
       role: Role.Admin,
     } as UserEntity;
-  }
-
-  getUserByUsername(username: string) {
-    return {
-      name: 'Philip',
-      email: 'philipcalape@gmail.com',
-      password: '$2a$10$VbunJyso/iScp92zRroc6.TiK6FLUY2kRfNvWFANbwUbiyn3Emw16',
-      birthDate: new Date(),
-      aboutMe: 'I am a software developer',
-      gender: Gender.Male,
-      role: Role.Admin,
-    } as UserEntity;
-  }
-
-  update(id: string, updateUserInput: UpdateUserInput) {
-    return {
-      name: 'Philip',
-      email: 'philipcalape@gmail.com',
-      password: '$2a$10$VbunJyso/iScp92zRroc6.TiK6FLUY2kRfNvWFANbwUbiyn3Emw16',
-      birthDate: new Date(),
-      aboutMe: 'I am a software developer',
-      gender: Gender.Male,
-      role: Role.Admin,
-    } as UserEntity;
-  }
-
-  remove(id: string) {
-    return `This action removes a #${id} user`;
   }
 }
