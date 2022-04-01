@@ -25,9 +25,9 @@ const mockJwtService = () => ({
 });
 
 const mockUsersService = () => ({
-  getUserByUsername: jest.fn(),
+  getUserByEmail: jest.fn(),
   getUserById: jest.fn(),
-  createUserWithWallet: jest.fn(),
+  createUser: jest.fn(),
 });
 
 describe('Authentication Service', () => {
@@ -70,7 +70,7 @@ describe('Authentication Service', () => {
         aboutMe: 'mockaroo',
       };
       const expectedUser = { ...registrationData };
-      usersService.createUserWithWallet.mockResolvedValue(expectedUser);
+      usersService.createUser.mockResolvedValue(expectedUser);
 
       const actualUser = await authService.register(registrationData);
       expect(actualUser).toEqual(expectedUser);
@@ -79,7 +79,7 @@ describe('Authentication Service', () => {
     it('throws a 400 Bad Request if username or email is taken', async () => {
       const uniqueViolationError = new Error('UniqueViolation') as any;
       uniqueViolationError.code = PostgresErrorCode.UniqueViolation;
-      usersService.createUserWithWallet.mockRejectedValue(uniqueViolationError);
+      usersService.createUser.mockRejectedValue(uniqueViolationError);
 
       await expect(
         authService.register({
@@ -93,11 +93,11 @@ describe('Authentication Service', () => {
   describe('login', () => {
     it('returns token if authenticated', async () => {
       const loginInput: LoginInput = {
-        username: 'neilryan',
+        email: 'neilryan',
         password: 'password123',
       };
       usersService.getUserByEmail.mockResolvedValue({
-        username: 'neilryan',
+        email: 'neilryan',
         password:
           '$2a$10$VbunJyso/iScp92zRroc6.TiK6FLUY2kRfNvWFANbwUbiyn3Emw16', // password hash of 'password123'
       });
@@ -109,7 +109,7 @@ describe('Authentication Service', () => {
     it('throws a 400 Bad Request if user does not exist in the database', async () => {
       usersService.getUserByEmail.mockResolvedValue(null);
       const loginInput: LoginInput = {
-        username: 'philipcalape',
+        email: 'philipcalape',
         password: 'password123',
       };
       await expect(authService.login(loginInput)).rejects.toThrowError(
@@ -124,7 +124,7 @@ describe('Authentication Service', () => {
           '$2a$10$VbunJyso/iScp92zRroc6.TiK6FLUY2kRfNvWFANbwUbiyn3Emw16',
       });
       const loginInput: LoginInput = {
-        username: 'neilryan',
+        email: 'neilryan',
         password: 'wrongpassword',
       };
       await expect(authService.login(loginInput)).rejects.toThrowError(
