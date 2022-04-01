@@ -3,6 +3,7 @@ import {
   IsAlphanumeric,
   IsDate,
   IsEmail,
+  IsOptional,
   Length,
   MaxLength,
 } from 'class-validator';
@@ -29,5 +30,10 @@ export class RegisterUserInput {
   birthDate: Date;
 
   @Field(() => Gender, { nullable: true })
+  @IsOptional()
   gender?: Gender;
+
+  @Field()
+  @Length(1, 300)
+  aboutMe: string;
 }
