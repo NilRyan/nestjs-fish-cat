@@ -14,27 +14,19 @@ export class UsersService {
     return await this.usersRepository.createUser(registerUserInput);
   }
 
-  async findAll() {
-    return `This action returns all users`;
+  async getAllUsers(): Promise<UserEntity[]> {
+    return await this.usersRepository.find();
   }
 
   async getUserById(id: string): Promise<UserEntity> {
     return this.usersRepository.findOne(id);
   }
 
-  async getUserByEmail(email: string) {
+  async getUserByEmail(email: string): Promise<UserEntity> {
     return this.usersRepository.findOne({ where: { email } });
   }
 
   async update(id: string, updateUserInput: UpdateUserInput) {
-    return {
-      name: 'Philip',
-      email: 'philipcalape@gmail.com',
-      password: '$2a$10$VbunJyso/iScp92zRroc6.TiK6FLUY2kRfNvWFANbwUbiyn3Emw16',
-      birthDate: new Date(),
-      aboutMe: 'I am a software developer',
-      gender: Gender.Male,
-      role: Role.Admin,
-    } as UserEntity;
+    return this.usersRepository.update(id, updateUserInput);
   }
 }

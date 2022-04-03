@@ -10,17 +10,17 @@ export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
   @Query(() => [UserProfileOutput], { name: 'users' })
-  findAll() {
-    return this.usersService.findAll();
+  getAllUsers() {
+    return this.usersService.getAllUsers();
   }
 
   @Query(() => UserProfileOutput, { name: 'user' })
-  findOne(@Args('id') id: string) {
+  getUserById(@Args('id') id: string) {
     return this.usersService.getUserById(id);
   }
 
   @Mutation(() => UserProfileOutput)
-  updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
+  updateUserById(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
     return this.usersService.update(updateUserInput.id, updateUserInput);
   }
 }

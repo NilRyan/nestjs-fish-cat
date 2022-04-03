@@ -38,7 +38,7 @@ input LoginInput {
 }
 
 type Mutation {
-  updateUser(updateUserInput: UpdateUserInput!): UserProfileOutput!
+  updateUserById(updateUserInput: UpdateUserInput!): UserProfileOutput!
   register(registerUserInput: RegisterUserInput!): UserProfileOutput!
 }
 
