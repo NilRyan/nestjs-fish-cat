@@ -7,7 +7,6 @@ import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
 import databaseConfig from './database/database.config';
 import { UsersModule } from './users/users.module';
-import { MoModule } from './mo/mo.module';
 import { ChatModule } from './chat/chat.module';
 @Module({
   imports: [
@@ -18,6 +17,9 @@ import { ChatModule } from './chat/chat.module';
       useFactory: () => ({
         playground: Boolean('GRAPHQL__PLAYGROUND'),
         autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+        subscriptions: {
+          'graphql-ws': true,
+        },
       }),
     }),
     ConfigModule.forRoot({
@@ -33,7 +35,6 @@ import { ChatModule } from './chat/chat.module';
     }),
     UsersModule,
     AuthModule,
-    MoModule,
     ChatModule,
   ],
 })
