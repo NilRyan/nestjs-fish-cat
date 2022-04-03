@@ -7,6 +7,8 @@ import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
 import databaseConfig from './database/database.config';
 import { UsersModule } from './users/users.module';
+import { MoModule } from './mo/mo.module';
+import { ChatModule } from './chat/chat.module';
 @Module({
   imports: [
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
@@ -31,6 +33,8 @@ import { UsersModule } from './users/users.module';
     }),
     UsersModule,
     AuthModule,
+    MoModule,
+    ChatModule,
   ],
 })
 export class AppModule {}
