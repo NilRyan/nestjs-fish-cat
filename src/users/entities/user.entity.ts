@@ -23,9 +23,6 @@ export class UserEntity extends BaseModel {
   @Column({ type: 'date' })
   birthDate: Date;
 
-  @ManyToOne((type) => ChatsEntity)
-  chats: ChatsEntity;
-
   @Column({
     type: 'enum',
     enum: Gender,

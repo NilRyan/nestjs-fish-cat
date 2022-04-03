@@ -26,6 +26,23 @@ type AccessTokenOutput {
   accessToken: String!
 }
 
+type ChatOutput {
+  id: String!
+  createdBy: UserProfileOutput!
+  createdAt: DateTime!
+  participants: [UserProfileOutput!]!
+  messages: [MessagesOutput!]!
+}
+
+type MessagesOutput {
+  chatId: String!
+  chat: ChatOutput!
+  authorId: String!
+  author: UserProfileOutput!
+  message: String!
+  createdAt: DateTime!
+}
+
 type Query {
   users: [UserProfileOutput!]!
   user(id: String!): UserProfileOutput!
@@ -40,6 +57,8 @@ input LoginInput {
 type Mutation {
   updateUserById(updateUserInput: UpdateUserInput!): UserProfileOutput!
   register(registerUserInput: RegisterUserInput!): UserProfileOutput!
+  sendMessage(chatId: String!, message: String!): MessagesOutput!
+  createChat(participantId: String!): ChatOutput!
 }
 
 input UpdateUserInput {
@@ -59,4 +78,8 @@ input RegisterUserInput {
   birthDate: DateTime
   gender: Gender
   aboutMe: String!
+}
+
+type Subscription {
+  listenToChat(chatId: String!): MessagesOutput!
 }

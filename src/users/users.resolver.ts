@@ -3,7 +3,6 @@ import { UserProfileOutput } from './dto/user-profile.output';
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { UserEntity } from './entities/user.entity';
-import { RegisterUserInput } from './dto/register-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { UseGuards } from '@nestjs/common';
 import { GetCurrentUser } from '../auth/decorators/get-current-user.decorator';
