@@ -1,4 +1,4 @@
-import { PubSubModule } from './pub sub/pubSub.module';
+import { PubSubModule } from './pub_sub/pubSub.module';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
