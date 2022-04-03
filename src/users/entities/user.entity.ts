@@ -1,5 +1,6 @@
+import { ChatsEntity } from './../../chat/entities/chats.entity';
 import { BaseModel } from './../../common/base.model';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import Role from '../../auth/enums/role.enum';
 import Gender from '../enums/gender.enum';
@@ -21,6 +22,9 @@ export class UserEntity extends BaseModel {
 
   @Column({ type: 'date' })
   birthDate: Date;
+
+  @ManyToOne((type) => ChatsEntity)
+  chats: ChatsEntity;
 
   @Column({
     type: 'enum',
