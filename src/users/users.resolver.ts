@@ -1,10 +1,13 @@
+import { GqlAuthGuard } from './../auth/guards/graphql-jwt-auth.guard';
 import { UserProfileOutput } from './dto/user-profile.output';
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { UserEntity } from './entities/user.entity';
 import { RegisterUserInput } from './dto/register-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
-
+import { UseGuards } from '@nestjs/common';
+import { GetCurrentUser } from '../auth/decorators/get-current-user.decorator';
+@UseGuards(GqlAuthGuard)
 @Resolver(() => UserProfileOutput)
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
@@ -20,7 +23,10 @@ export class UsersResolver {
   }
 
   @Mutation(() => UserProfileOutput)
-  updateUserById(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
-    return this.usersService.update(updateUserInput.id, updateUserInput);
+  updateUserById(
+    @Args('updateUserInput') updateUserInput: UpdateUserInput,
+    @GetCurrentUser() user: UserEntity,
+  ) {
+    return this.usersService.update(user.id, updateUserInput);
   }
 }
