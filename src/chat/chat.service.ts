@@ -26,7 +26,7 @@ export class ChatService {
     return chat;
   }
 
-  async getAllChats(currentUser: UserEntity) {
+  async getAllChats(currentUser: UserEntity): Promise<ChatsEntity[]> {
     const chats = await this.chatsRepository.find({
       where: {
         participants: In([currentUser]),

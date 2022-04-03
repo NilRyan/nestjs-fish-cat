@@ -1,6 +1,6 @@
 import { MessagesOutput } from './dto/messages.output';
 import { RedisPubSub } from 'graphql-redis-subscriptions';
-import { Inject, UseGuards } from '@nestjs/common';
+import { Inject, Query, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver, Subscription } from '@nestjs/graphql';
 import { ChatService } from './chat.service';
 import { PUB_SUB } from '../pub_sub/pubSub.module';
@@ -19,6 +19,13 @@ export class ChatResolver {
     private readonly chatService: ChatService,
     @Inject(PUB_SUB) private readonly pubSub: RedisPubSub,
   ) {}
+
+  // @Query(() => [ChatOutput])
+  // async getAllChats(
+  //   @GetCurrentUser() currentUser: UserEntity,
+  // ): Promise<ChatOutput[]> {
+  //   return await this.chatService.getAllChats(currentUser);
+  // }
 
   @Mutation(() => MessagesOutput)
   async sendMessage(

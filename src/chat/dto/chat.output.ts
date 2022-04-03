@@ -8,7 +8,7 @@ export class ChatOutput {
   id: string;
 
   @Field(() => UserProfileOutput)
-  createdBy: string;
+  createdBy: UserProfileOutput;
 
   @Field(() => GraphQLISODateTime)
   createdAt: Date;
