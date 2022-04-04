@@ -43,6 +43,12 @@ type MessagesOutput {
   createdAt: DateTime!
 }
 
+type MessageOutput {
+  author: UserProfileOutput!
+  message: String!
+  createdAt: String!
+}
+
 type Query {
   users: [UserProfileOutput!]!
   user(id: String!): UserProfileOutput!
@@ -81,5 +87,5 @@ input RegisterUserInput {
 }
 
 type Subscription {
-  listenToChat(chatId: String!): MessagesOutput!
+  listenToChat(chatId: String!): MessageOutput!
 }

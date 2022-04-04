@@ -1,6 +1,6 @@
 import { MessagesOutput } from './dto/messages.output';
 import { RedisPubSub } from 'graphql-redis-subscriptions';
-import { Inject, Query, UseGuards } from '@nestjs/common';
+import { Inject, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver, Subscription } from '@nestjs/graphql';
 import { ChatService } from './chat.service';
 import { PUB_SUB } from '../pub_sub/pubSub.module';
@@ -9,6 +9,7 @@ import { GetCurrentUser } from '../auth/decorators/get-current-user.decorator';
 import { UserEntity } from '../users/entities/user.entity';
 import { GqlAuthGuard } from '../auth/guards/graphql-jwt-auth.guard';
 import { ChatOutput } from './dto/chat.output';
+import { MessageOutput } from './dto/message.output';
 
 // NOTE: Chat Subscription Pattern `${CHAT}.${chatId}`
 
@@ -38,8 +39,12 @@ export class ChatResolver {
       currentUser,
     );
     const chatRoom = `${CHAT}.${chatId}`;
-    this.pubSub.publish(chatRoom, {
-      [chatRoom]: newMessage,
+    await this.pubSub.publish(chatRoom, {
+      listenToChat: {
+        author: currentUser,
+        message,
+        createdAt: newMessage.createdAt.toISOString(),
+      } as MessageOutput,
     });
     return newMessage;
   }
@@ -53,7 +58,7 @@ export class ChatResolver {
     return chat;
   }
 
-  @Subscription(() => MessagesOutput)
+  @Subscription(() => MessageOutput)
   listenToChat(@Args('chatId') chatId: string) {
     return this.pubSub.asyncIterator(`${CHAT}.${chatId}`);
   }
