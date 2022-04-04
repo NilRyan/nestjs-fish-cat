@@ -12,7 +12,6 @@ import { ChatOutput } from './dto/chat.output';
 
 // NOTE: Chat Subscription Pattern `${CHAT}.${chatId}`
 
-@UseGuards(GqlAuthGuard)
 @Resolver()
 export class ChatResolver {
   constructor(
@@ -26,7 +25,7 @@ export class ChatResolver {
   // ): Promise<ChatOutput[]> {
   //   return await this.chatService.getAllChats(currentUser);
   // }
-
+  @UseGuards(GqlAuthGuard)
   @Mutation(() => MessagesOutput)
   async sendMessage(
     @Args('chatId') chatId: string,
@@ -38,10 +37,13 @@ export class ChatResolver {
       message,
       currentUser,
     );
-    this.pubSub.publish(`${CHAT}.${chatId}`, { newMessage });
+    const chatRoom = `${CHAT}.${chatId}`;
+    this.pubSub.publish(chatRoom, {
+      [chatRoom]: newMessage,
+    });
     return newMessage;
   }
-
+  @UseGuards(GqlAuthGuard)
   @Mutation(() => ChatOutput)
   async createChat(
     @Args('participantId') participantId: string,

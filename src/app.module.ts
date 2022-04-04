@@ -20,6 +20,7 @@ import { ChatModule } from './chat/chat.module';
         autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
         subscriptions: {
           'graphql-ws': true,
+          'subscriptions-transport-ws': true,
         },
       }),
     }),
