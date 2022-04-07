@@ -9,6 +9,8 @@ import { AuthModule } from './auth/auth.module';
 import databaseConfig from './database/database.config';
 import { UsersModule } from './users/users.module';
 import { ChatModule } from './chat/chat.module';
+import { MatchModule } from './match/match.module';
+import { MatchModule } from './match/match.module';
 @Module({
   imports: [
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
@@ -39,6 +41,7 @@ import { ChatModule } from './chat/chat.module';
     AuthModule,
     ChatModule,
     PubSubModule,
+    MatchModule,
   ],
 })
 export class AppModule {}
