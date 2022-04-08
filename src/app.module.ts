@@ -10,7 +10,6 @@ import databaseConfig from './database/database.config';
 import { UsersModule } from './users/users.module';
 import { ChatModule } from './chat/chat.module';
 import { MatchModule } from './match/match.module';
-import { MatchModule } from './match/match.module';
 @Module({
   imports: [
     GraphQLModule.forRootAsync<ApolloDriverConfig>({

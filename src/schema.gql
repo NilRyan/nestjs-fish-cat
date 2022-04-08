@@ -49,16 +49,16 @@ type MessageOutput {
   createdAt: String!
 }
 
-type Match {
-  """Example field (placeholder)"""
-  exampleField: Int!
+type LikeOutput {
+  user: UserProfileOutput!
+  judgedUser: UserProfileOutput!
+  like: Boolean!
 }
 
 type Query {
   users: [UserProfileOutput!]!
   user(id: String!): UserProfileOutput!
   login(loginInput: LoginInput!): AccessTokenOutput!
-  match(id: Int!): Match!
 }
 
 input LoginInput {
@@ -71,9 +71,7 @@ type Mutation {
   register(registerUserInput: RegisterUserInput!): UserProfileOutput!
   sendMessage(chatId: String!, message: String!): MessagesOutput!
   createChat(participantId: String!): ChatOutput!
-  createMatch(createMatchInput: CreateMatchInput!): Match!
-  updateMatch(updateMatchInput: UpdateMatchInput!): Match!
-  removeMatch(id: Int!): Match!
+  swipe(swipeInput: SwipeInput!): LikeOutput!
 }
 
 input UpdateUserInput {
@@ -95,15 +93,9 @@ input RegisterUserInput {
   aboutMe: String!
 }
 
-input CreateMatchInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input UpdateMatchInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
+input SwipeInput {
+  judgedUserId: ID!
+  like: Boolean!
 }
 
 type Subscription {

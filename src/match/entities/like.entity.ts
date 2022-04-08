@@ -1,7 +1,8 @@
+import { BaseModel } from './../../common/base.model';
 import { Column, Entity } from 'typeorm';
 
 @Entity('likes')
-export class LikesEntity {
+export class LikesEntity extends BaseModel {
   @Column()
   userId: string;
 
