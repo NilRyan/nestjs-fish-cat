@@ -38,4 +38,23 @@ export class MatchService {
 
     return userJudgedRecord ? true : false;
   }
+
+  async getMatches(id: string) {
+    const userLikes = await this.likesRepository.find({
+      where: { userId: id, like: true },
+    });
+
+    const userLiked = await this.likesRepository.find({
+      where: { judgedUserId: id, like: true },
+    });
+
+    const userLikesIds = userLikes.map((like) => like.judgedUserId);
+    const userLikedIds = userLiked.map((like) => like.userId);
+
+    const matches = userLikesIds.filter((likedId) =>
+      userLikedIds.includes(likedId),
+    );
+
+    return matches;
+  }
 }
