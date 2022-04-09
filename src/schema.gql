@@ -53,6 +53,7 @@ type LikeOutput {
   userId: String!
   judgedUserId: String!
   like: Boolean!
+  chatId: String
 }
 
 type Query {

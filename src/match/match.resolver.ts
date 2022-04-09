@@ -15,10 +15,10 @@ export class MatchResolver {
 
   @Mutation(() => LikeOutput)
   async swipe(
-    @GetCurrentUser() { id }: UserEntity,
+    @GetCurrentUser() user: UserEntity,
     @Args('swipeInput') swipeInput: SwipeInput,
   ): Promise<LikeOutput> {
-    return await this.matchService.swipe(id, swipeInput);
+    return await this.matchService.swipe(user, swipeInput);
   }
 
   @Query(() => [UserProfileOutput])

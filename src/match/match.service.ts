@@ -4,33 +4,40 @@ import { SwipeInput } from './dto/swipe.input';
 import { LikesEntity } from './entities/like.entity';
 import { LikesRepository } from './repositories/likes.repository';
 import { UserEntity } from '../users/entities/user.entity';
+import { ChatsRepository } from '../chat/repositories/chats.repository';
+import { ChatsEntity } from '../chat/entities/chats.entity';
 
 @Injectable()
 export class MatchService {
   constructor(
     private readonly likesRepository: LikesRepository,
     private readonly usersRepository: UsersRepository,
+    private readonly chatsRepository: ChatsRepository,
   ) {}
 
-  async swipe(id: string, swipeInput: SwipeInput) {
+  async swipe(user: UserEntity, swipeInput: SwipeInput) {
     const { judgedUserId, like } = swipeInput;
     const likeEntity: LikesEntity = await this.likesRepository.findOne({
-      where: { userId: id, judgedUserId: judgedUserId },
+      where: { userId: user.id, judgedUserId: judgedUserId },
     });
 
-    if (likeEntity) {
-      likeEntity.like = like;
-      await this.likesRepository.save(likeEntity);
-    } else {
-      await this.likesRepository.save({
-        userId: id,
-        judgedUserId,
-        like,
-      });
-    }
+    await this.likesRepository.save({
+      userId: user.id,
+      judgedUserId,
+      like,
+    });
 
-    if (like && this.isAlreadyLikedByJudgedUser(judgedUserId, id)) {
+    if (like && this.isAlreadyLikedByJudgedUser(judgedUserId, user.id)) {
       // TODO: Create a chatroom and create notif to both users
+      const judgedUser = await this.usersRepository.findOne(judgedUserId);
+      const chat: ChatsEntity = await this.chatsRepository.createChat(
+        user,
+        judgedUser,
+      );
+      return {
+        ...likeEntity,
+        chatId: chat.id,
+      };
     }
 
     return likeEntity;

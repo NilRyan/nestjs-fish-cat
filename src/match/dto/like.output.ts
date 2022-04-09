@@ -10,4 +10,7 @@ export class LikeOutput {
 
   @Field()
   like: boolean;
+
+  @Field({ nullable: true })
+  chatId?: string;
 }
