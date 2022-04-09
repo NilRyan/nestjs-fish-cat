@@ -17,7 +17,8 @@ import { MatchModule } from './match/match.module';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: () => ({
-        playground: Boolean('GRAPHQL__PLAYGROUND'),
+        introspection: true,
+        playground: true,
         autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
         subscriptions: {
           'graphql-ws': true,
