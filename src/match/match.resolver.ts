@@ -14,11 +14,11 @@ export class MatchResolver {
   constructor(private readonly matchService: MatchService) {}
 
   @Mutation(() => LikeOutput)
-  swipe(
+  async swipe(
     @GetCurrentUser() { id }: UserEntity,
     @Args('swipeInput') swipeInput: SwipeInput,
   ): Promise<LikeOutput> {
-    return this.matchService.swipe(id, swipeInput);
+    return await this.matchService.swipe(id, swipeInput);
   }
 
   @Query(() => [UserProfileOutput])

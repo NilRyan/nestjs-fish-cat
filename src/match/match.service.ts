@@ -15,8 +15,9 @@ export class MatchService {
   async swipe(id: string, swipeInput: SwipeInput) {
     const { judgedUserId, like } = swipeInput;
     const likeEntity: LikesEntity = await this.likesRepository.findOne({
-      where: { id, judgedUserId: id },
+      where: { userId: id, judgedUserId: judgedUserId },
     });
+
     if (likeEntity) {
       likeEntity.like = like;
       await this.likesRepository.save(likeEntity);
@@ -31,6 +32,7 @@ export class MatchService {
     if (like && this.isAlreadyLikedByJudgedUser(judgedUserId, id)) {
       // TODO: Create a chatroom and create notif to both users
     }
+
     return likeEntity;
   }
 
