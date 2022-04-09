@@ -1,11 +1,16 @@
+import { UsersRepository } from './../users/repositories/users.repository';
 import { Injectable } from '@nestjs/common';
 import { SwipeInput } from './dto/swipe.input';
 import { LikesEntity } from './entities/like.entity';
 import { LikesRepository } from './repositories/likes.repository';
+import { UserEntity } from '../users/entities/user.entity';
 
 @Injectable()
 export class MatchService {
-  constructor(private readonly likesRepository: LikesRepository) {}
+  constructor(
+    private readonly likesRepository: LikesRepository,
+    private readonly usersRepository: UsersRepository,
+  ) {}
 
   async swipe(id: string, swipeInput: SwipeInput) {
     const { judgedUserId, like } = swipeInput;
@@ -51,10 +56,14 @@ export class MatchService {
     const userLikesIds = userLikes.map((like) => like.judgedUserId);
     const userLikedIds = userLiked.map((like) => like.userId);
 
-    const matches = userLikesIds.filter((likedId) =>
+    const matches: string[] = userLikesIds.filter((likedId) =>
       userLikedIds.includes(likedId),
     );
 
-    return matches;
+    const usersMatched: UserEntity[] = await this.usersRepository.findByIds(
+      matches,
+    );
+
+    return usersMatched;
   }
 }

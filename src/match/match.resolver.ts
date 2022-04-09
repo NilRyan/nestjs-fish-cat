@@ -1,5 +1,6 @@
+import { UserProfileOutput } from './../users/dto/user-profile.output';
 import { UserEntity } from './../users/entities/user.entity';
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GetCurrentUser } from '../auth/decorators/get-current-user.decorator';
 import { LikeOutput } from './dto/like.output';
 import { SwipeInput } from './dto/swipe.input';
@@ -13,9 +14,14 @@ export class MatchResolver {
   swipe(
     @GetCurrentUser() { id }: UserEntity,
     @Args('swipeInput') swipeInput: SwipeInput,
-  ) {
+  ): Promise<LikeOutput> {
     return this.matchService.swipe(id, swipeInput);
   }
 
-  // ADD ResolveField for likeOutput
+  @Query(() => [UserProfileOutput])
+  getMatches(
+    @GetCurrentUser() { id }: UserEntity,
+  ): Promise<UserProfileOutput[]> {
+    return this.matchService.getMatches(id);
+  }
 }

@@ -1,13 +1,12 @@
-import { UserProfileOutput } from './../../users/dto/user-profile.output';
 import { Field, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class LikeOutput {
   @Field()
-  user: UserProfileOutput;
+  userId: string;
 
   @Field()
-  judgedUser: UserProfileOutput;
+  judgedUserId: string;
 
   @Field()
   like: boolean;

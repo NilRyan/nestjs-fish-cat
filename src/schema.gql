@@ -50,8 +50,8 @@ type MessageOutput {
 }
 
 type LikeOutput {
-  user: UserProfileOutput!
-  judgedUser: UserProfileOutput!
+  userId: String!
+  judgedUserId: String!
   like: Boolean!
 }
 
@@ -59,6 +59,7 @@ type Query {
   users: [UserProfileOutput!]!
   user(id: String!): UserProfileOutput!
   login(loginInput: LoginInput!): AccessTokenOutput!
+  getMatches: [UserProfileOutput!]!
 }
 
 input LoginInput {
