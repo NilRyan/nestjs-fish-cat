@@ -26,6 +26,19 @@ type AccessTokenOutput {
   accessToken: String!
 }
 
+type Token {
+  """JWT access token"""
+  accessToken: JWT!
+
+  """JWT refresh token"""
+  refreshToken: JWT!
+}
+
+"""
+A field whose value is a JSON Web Token (JWT): https://jwt.io/introduction.
+"""
+scalar JWT
+
 type ChatOutput {
   id: String!
   createdBy: UserProfileOutput!
@@ -71,6 +84,7 @@ input LoginInput {
 type Mutation {
   updateUserById(updateUserInput: UpdateUserInput!): UserProfileOutput!
   register(registerUserInput: RegisterUserInput!): UserProfileOutput!
+  refreshToken(token: JWT!): Token!
   sendMessage(chatId: String!, message: String!): MessagesOutput!
   createChat(participantId: String!): ChatOutput!
   swipe(swipeInput: SwipeInput!): LikeOutput!

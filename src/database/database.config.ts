@@ -12,9 +12,9 @@ export default registerAs('database', () => {
     database: process.env.POSTGRES_DB,
     autoLoadEntities: true,
     synchronize: true,
-    ssl: {
-      rejectUnauthorized: false,
-    },
+    // ssl: {
+    //   rejectUnauthorized: false,
+    // },
     entities: [join(__dirname, '..', '/**/**/*.entity{.ts,.js}')],
     migrations: [__dirname + '/database/migrations/*{.ts,.js}'],
     cli: {
