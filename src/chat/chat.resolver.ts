@@ -4,7 +4,7 @@ import { Inject, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Resolver, Subscription } from '@nestjs/graphql';
 import { ChatService } from './chat.service';
 import { PUB_SUB } from '../pub_sub/pubSub.module';
-import { CHAT } from './constants/constants';
+import { CHAT } from '../pub_sub/constants/constants';
 import { GetCurrentUser } from '../auth/decorators/get-current-user.decorator';
 import { UserEntity } from '../users/entities/user.entity';
 import { GqlAuthGuard } from '../auth/guards/graphql-jwt-auth.guard';

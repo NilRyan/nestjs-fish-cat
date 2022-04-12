@@ -5,6 +5,7 @@ import { Module } from '@nestjs/common';
 import { MatchService } from './match.service';
 import { MatchResolver } from './match.resolver';
 import { ChatsRepository } from '../chat/repositories/chats.repository';
+import { PubSubModule } from '../pub_sub/pubSub.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { ChatsRepository } from '../chat/repositories/chats.repository';
       UsersRepository,
       ChatsRepository,
     ]),
+    PubSubModule,
   ],
   providers: [MatchResolver, MatchService],
 })

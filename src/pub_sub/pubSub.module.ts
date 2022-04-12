@@ -11,30 +11,17 @@ export const PUB_SUB = 'PUB_SUB';
   providers: [
     {
       provide: PUB_SUB,
-      useFactory: (configService: ConfigService) =>
-        new RedisPubSub({
-          // connection: {
-          //   host: configService.get('REDIS_HOST'),
-          //   port: configService.get('REDIS_PORT'),
-          //   password: configService.get('REDIS_PASSWORD'),
-          // },
-          publisher: new Redis({
-            host: configService.get('REDIS_HOST'),
-            port: configService.get('REDIS_PORT'),
-            password: configService.get('REDIS_PASSWORD'),
-            tls: {
-              rejectUnauthorized: false,
-            },
-          }),
-          subscriber: new Redis({
-            host: configService.get('REDIS_HOST'),
-            port: configService.get('REDIS_PORT'),
-            password: configService.get('REDIS_PASSWORD'),
-            tls: {
-              rejectUnauthorized: false,
-            },
-          }),
-        }),
+      useFactory: (configService: ConfigService) => {
+        const config = {
+          host: configService.get('REDIS_HOST'),
+          port: configService.get('REDIS_PORT'),
+          password: configService.get('REDIS_PASSWORD'),
+        };
+        return new RedisPubSub({
+          publisher: new Redis(config),
+          subscriber: new Redis(config),
+        });
+      },
       inject: [ConfigService],
     },
   ],
