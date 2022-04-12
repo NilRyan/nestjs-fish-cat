@@ -1,11 +1,14 @@
+import { RedisPubSub } from 'graphql-redis-subscriptions';
 import { UsersRepository } from './../users/repositories/users.repository';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { SwipeInput } from './dto/swipe.input';
 import { LikesEntity } from './entities/like.entity';
 import { LikesRepository } from './repositories/likes.repository';
 import { UserEntity } from '../users/entities/user.entity';
 import { ChatsRepository } from '../chat/repositories/chats.repository';
 import { ChatsEntity } from '../chat/entities/chats.entity';
+import { PUB_SUB } from '../pub_sub/pubSub.module';
+import { MATCH } from '../pub_sub/constants/constants';
 
 @Injectable()
 export class MatchService {
@@ -13,6 +16,7 @@ export class MatchService {
     private readonly likesRepository: LikesRepository,
     private readonly usersRepository: UsersRepository,
     private readonly chatsRepository: ChatsRepository,
+    @Inject(PUB_SUB) private readonly pubSub: RedisPubSub,
   ) {}
 
   async swipe(user: UserEntity, swipeInput: SwipeInput) {
@@ -25,16 +29,17 @@ export class MatchService {
     });
 
     if (like && this.isAlreadyLikedByJudgedUser(judgedUserId, user.id)) {
-      // TODO: create notif to both users
       const judgedUser = await this.usersRepository.findOne(judgedUserId);
       const chat: ChatsEntity = await this.chatsRepository.createChat(
         user,
         judgedUser,
       );
-      return {
+      const likeOutput = {
         ...likeEntity,
         chatId: chat.id,
       };
+      this.pubSub.publish(MATCH, { matchAdded: likeOutput });
+      return likeOutput;
     }
 
     return likeEntity;

@@ -116,5 +116,5 @@ input SwipeInput {
 
 type Subscription {
   listenToChat(chatId: String!): MessageOutput!
-  matchAdded: LikeOutput!
+  matchAdded(userId: String!): LikeOutput!
 }
