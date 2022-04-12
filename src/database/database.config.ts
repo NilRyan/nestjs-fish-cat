@@ -2,7 +2,7 @@ import { registerAs } from '@nestjs/config';
 import { join } from 'path';
 
 export default registerAs('database', () => {
-  return {
+  const config: any = {
     type: 'postgres',
     logging: true,
     host: process.env.POSTGRES_HOST,
@@ -12,9 +12,7 @@ export default registerAs('database', () => {
     database: process.env.POSTGRES_DB,
     autoLoadEntities: true,
     synchronize: true,
-    // ssl: {
-    //   rejectUnauthorized: false,
-    // },
+
     entities: [join(__dirname, '..', '/**/**/*.entity{.ts,.js}')],
     migrations: [__dirname + '/database/migrations/*{.ts,.js}'],
     cli: {
@@ -23,4 +21,10 @@ export default registerAs('database', () => {
     seeds: ['src/database/seeding/seeds/*{.ts,.js}'],
     factories: ['src/database/seeding/factories/*{.ts,.js}'],
   };
+  if (process.env.APP_ENV === 'production') {
+    config.ssl = {
+      rejectUnauthorized: false,
+    };
+  }
+  return config;
 });

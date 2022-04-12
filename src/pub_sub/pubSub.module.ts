@@ -12,11 +12,16 @@ export const PUB_SUB = 'PUB_SUB';
     {
       provide: PUB_SUB,
       useFactory: (configService: ConfigService) => {
-        const config = {
+        const config: any = {
           host: configService.get('REDIS_HOST'),
           port: configService.get('REDIS_PORT'),
           password: configService.get('REDIS_PASSWORD'),
         };
+        if (process.env.APP_ENV === 'production') {
+          config.tls = {
+            rejectUnauthorized: false,
+          };
+        }
         return new RedisPubSub({
           publisher: new Redis(config),
           subscriber: new Redis(config),
