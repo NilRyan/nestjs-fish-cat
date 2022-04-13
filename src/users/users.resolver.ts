@@ -1,11 +1,11 @@
-import { GqlAuthGuard } from './../auth/guards/graphql-jwt-auth.guard';
-import { UserProfileOutput } from './dto/user-profile.output';
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
-import { UsersService } from './users.service';
-import { UserEntity } from './entities/user.entity';
-import { UpdateUserInput } from './dto/update-user.input';
 import { UseGuards } from '@nestjs/common';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { GetCurrentUser } from '../auth/decorators/get-current-user.decorator';
+import { GqlAuthGuard } from './../auth/guards/graphql-jwt-auth.guard';
+import { UpdateUserInput } from './dto/update-user.input';
+import { UserProfileOutput } from './dto/user-profile.output';
+import { UserEntity } from './entities/user.entity';
+import { UsersService } from './users.service';
 @UseGuards(GqlAuthGuard)
 @Resolver(() => UserProfileOutput)
 export class UsersResolver {

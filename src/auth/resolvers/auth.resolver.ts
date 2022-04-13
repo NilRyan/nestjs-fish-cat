@@ -10,19 +10,19 @@ import { UserProfileOutput } from './../../users/dto/user-profile.output';
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
-  @Query((returns) => Token)
+  @Query(() => Token)
   async login(@Args('loginInput') loginInput: LoginInput) {
     return this.authService.login(loginInput);
   }
 
-  @Mutation((returns) => UserProfileOutput)
+  @Mutation(() => UserProfileOutput)
   async register(
     @Args('registerUserInput') registerUserInput: RegisterUserInput,
   ): Promise<UserProfileOutput> {
     return this.authService.register(registerUserInput);
   }
 
-  @Mutation((returns) => Token)
+  @Mutation(() => Token)
   async refreshToken(@Args() { token }: RefreshTokenInput) {
     return this.authService.refreshToken(token);
   }
