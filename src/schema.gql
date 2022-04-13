@@ -22,10 +22,6 @@ enum Gender {
   Female
 }
 
-type AccessTokenOutput {
-  accessToken: String!
-}
-
 type Token {
   """JWT access token"""
   accessToken: JWT!
@@ -72,7 +68,8 @@ type LikeOutput {
 type Query {
   users: [UserProfileOutput!]!
   user(id: String!): UserProfileOutput!
-  login(loginInput: LoginInput!): AccessTokenOutput!
+  login(loginInput: LoginInput!): Token!
+  refreshToken(token: JWT!): Token!
   getMatches: [UserProfileOutput!]!
 }
 
@@ -84,7 +81,6 @@ input LoginInput {
 type Mutation {
   updateUserById(updateUserInput: UpdateUserInput!): UserProfileOutput!
   register(registerUserInput: RegisterUserInput!): UserProfileOutput!
-  refreshToken(token: JWT!): Token!
   sendMessage(chatId: String!, message: String!): MessagesOutput!
   createChat(participantId: String!): ChatOutput!
   swipe(swipeInput: SwipeInput!): LikeOutput!

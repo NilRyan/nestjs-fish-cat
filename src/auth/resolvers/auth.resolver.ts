@@ -1,6 +1,5 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { RegisterUserInput } from '../../users/dto/register-user.input';
-import { AccessTokenOutput } from '../dto/access-token.output';
 import { LoginInput } from '../dto/login.input';
 import { RefreshTokenInput } from '../dto/refresh-token.input';
 import { Token } from '../model/token.model';
@@ -11,20 +10,20 @@ import { UserProfileOutput } from './../../users/dto/user-profile.output';
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
-  @Query((returns) => AccessTokenOutput)
+  @Query(() => Token)
   async login(@Args('loginInput') loginInput: LoginInput) {
     return this.authService.login(loginInput);
   }
 
-  @Mutation((returns) => UserProfileOutput)
+  @Query(() => Token)
+  async refreshToken(@Args() { token }: RefreshTokenInput) {
+    return this.authService.refreshToken(token);
+  }
+
+  @Mutation(() => UserProfileOutput)
   async register(
     @Args('registerUserInput') registerUserInput: RegisterUserInput,
   ): Promise<UserProfileOutput> {
     return this.authService.register(registerUserInput);
-  }
-
-  @Mutation((returns) => Token)
-  async refreshToken(@Args() { token }: RefreshTokenInput) {
-    return this.authService.refreshToken(token);
   }
 }
