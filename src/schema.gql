@@ -22,10 +22,6 @@ enum Gender {
   Female
 }
 
-type AccessTokenOutput {
-  accessToken: String!
-}
-
 type Token {
   """JWT access token"""
   accessToken: JWT!
@@ -72,7 +68,7 @@ type LikeOutput {
 type Query {
   users: [UserProfileOutput!]!
   user(id: String!): UserProfileOutput!
-  login(loginInput: LoginInput!): AccessTokenOutput!
+  login(loginInput: LoginInput!): Token!
   getMatches: [UserProfileOutput!]!
 }
 
