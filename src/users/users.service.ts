@@ -1,10 +1,8 @@
-import { UsersRepository } from './repositories/users.repository';
-import { UserEntity } from './entities/user.entity';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { RegisterUserInput } from './dto/register-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
-import Gender from './enums/gender.enum';
-import Role from '../auth/enums/role.enum';
+import { UserEntity } from './entities/user.entity';
+import { UsersRepository } from './repositories/users.repository';
 
 @Injectable()
 export class UsersService {
@@ -27,6 +25,10 @@ export class UsersService {
   }
 
   async update(id: string, updateUserInput: UpdateUserInput) {
-    return this.usersRepository.update(id, updateUserInput);
+    if (id !== updateUserInput.id) {
+      throw new BadRequestException("User's id doesn't match");
+    }
+    this.usersRepository.update(id, updateUserInput);
+    return this.usersRepository.findOne(id);
   }
 }
