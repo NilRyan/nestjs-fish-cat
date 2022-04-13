@@ -15,15 +15,15 @@ export class AuthResolver {
     return this.authService.login(loginInput);
   }
 
+  @Query(() => Token)
+  async refreshToken(@Args() { token }: RefreshTokenInput) {
+    return this.authService.refreshToken(token);
+  }
+
   @Mutation(() => UserProfileOutput)
   async register(
     @Args('registerUserInput') registerUserInput: RegisterUserInput,
   ): Promise<UserProfileOutput> {
     return this.authService.register(registerUserInput);
-  }
-
-  @Mutation(() => Token)
-  async refreshToken(@Args() { token }: RefreshTokenInput) {
-    return this.authService.refreshToken(token);
   }
 }
