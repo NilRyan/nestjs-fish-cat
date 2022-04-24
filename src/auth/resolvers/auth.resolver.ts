@@ -10,7 +10,7 @@ import { UserProfileOutput } from './../../users/dto/user-profile.output';
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
-  @Query(() => Token)
+  @Mutation(() => Token)
   async login(@Args('loginInput') loginInput: LoginInput) {
     return this.authService.login(loginInput);
   }

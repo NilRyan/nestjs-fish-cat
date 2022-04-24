@@ -48,6 +48,8 @@ export class ChatResolver {
     });
     return newMessage;
   }
+
+  // NOTE: keeping this for dev purposes
   @UseGuards(GqlAuthGuard)
   @Mutation(() => ChatOutput)
   async createChat(
