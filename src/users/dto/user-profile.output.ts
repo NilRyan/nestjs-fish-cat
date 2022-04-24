@@ -15,8 +15,10 @@ export class UserProfileOutput {
   @Field(() => GraphQLISODateTime)
   birthDate: Date;
 
-  @Field(() => Gender)
-  gender: Gender;
+  @Field(() => Gender, {
+    nullable: true,
+  })
+  gender?: Gender;
 
   @Field()
   name: string;
