@@ -68,18 +68,13 @@ type LikeOutput {
 type Query {
   users: [UserProfileOutput!]!
   user(id: String!): UserProfileOutput!
-  login(loginInput: LoginInput!): Token!
   refreshToken(token: JWT!): Token!
   getMatches: [UserProfileOutput!]!
 }
 
-input LoginInput {
-  email: String!
-  password: String!
-}
-
 type Mutation {
   updateUserById(updateUserInput: UpdateUserInput!): UserProfileOutput!
+  login(loginInput: LoginInput!): Token!
   register(registerUserInput: RegisterUserInput!): UserProfileOutput!
   sendMessage(chatId: String!, message: String!): MessagesOutput!
   createChat(participantId: String!): ChatOutput!
@@ -94,6 +89,11 @@ input UpdateUserInput {
   gender: Gender
   aboutMe: String
   id: ID!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
 }
 
 input RegisterUserInput {

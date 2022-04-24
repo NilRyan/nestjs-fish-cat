@@ -26,8 +26,9 @@ export class UserEntity extends BaseModel {
   @Column({
     type: 'enum',
     enum: Gender,
+    nullable: true,
   })
-  gender: Gender;
+  gender?: Gender;
 
   @Column({
     type: 'enum',
