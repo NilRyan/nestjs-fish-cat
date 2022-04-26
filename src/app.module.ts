@@ -11,7 +11,6 @@ import { UsersModule } from './users/users.module';
 import { ChatModule } from './chat/chat.module';
 import { MatchModule } from './match/match.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
-import { Cloudinary } from './cloudinary';
 @Module({
   imports: [
     GraphQLModule.forRootAsync<ApolloDriverConfig>({
@@ -46,6 +45,5 @@ import { Cloudinary } from './cloudinary';
     MatchModule,
     CloudinaryModule,
   ],
-  providers: [Cloudinary],
 })
 export class AppModule {}

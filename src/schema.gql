@@ -7,7 +7,7 @@ type UserProfileOutput {
   email: String!
   aboutMe: String
   birthDate: DateTime!
-  gender: Gender!
+  gender: Gender
   name: String!
 }
 
