@@ -1,9 +1,8 @@
-import { ChatsEntity } from './../../chat/entities/chats.entity';
-import { BaseModel } from './../../common/base.model';
-import { Column, Entity, ManyToOne } from 'typeorm';
 import { Exclude } from 'class-transformer';
+import { Column, Entity } from 'typeorm';
 import Role from '../../auth/enums/role.enum';
 import Gender from '../enums/gender.enum';
+import { BaseModel } from './../../common/base.model';
 
 @Entity('users')
 export class UserEntity extends BaseModel {
