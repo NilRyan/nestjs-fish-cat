@@ -23,7 +23,13 @@ export class MatchResolver {
     @GetCurrentUser() user: UserEntity,
     @Args('swipeInput') swipeInput: SwipeInput,
   ): Promise<LikeOutput> {
-    return await this.matchService.swipe(user, swipeInput);
+    return this.matchService.swipe(user, swipeInput);
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Query(() => [UserProfileOutput])
+  async getUsersYetToBeLiked(@GetCurrentUser() { id }: UserEntity) {
+    return this.matchService.getUsersYetToBeLiked(id);
   }
   @UseGuards(GqlAuthGuard)
   @Query(() => [UserProfileOutput])

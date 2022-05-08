@@ -6,7 +6,7 @@ type UserProfileOutput {
   id: String!
   email: String!
   aboutMe: String
-  birthDate: DateTime!
+  birthDate: DateTime
   gender: Gender
   name: String!
 }
@@ -69,6 +69,7 @@ type Query {
   users: [UserProfileOutput!]!
   user(id: String!): UserProfileOutput!
   refreshToken(token: JWT!): Token!
+  getUsersYetToBeLiked: [UserProfileOutput!]!
   getMatches: [UserProfileOutput!]!
 }
 

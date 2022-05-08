@@ -6,6 +6,6 @@ import { UserEntity } from '../entities/user.entity';
 export class UsersRepository extends Repository<UserEntity> {
   async createUser(registrationData: RegisterUserInput): Promise<UserEntity> {
     const newUser = this.create(registrationData);
-    return await this.save(newUser);
+    return this.save(newUser);
   }
 }

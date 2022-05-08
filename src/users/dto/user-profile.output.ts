@@ -12,8 +12,8 @@ export class UserProfileOutput {
   @Field({ nullable: true })
   aboutMe?: string;
 
-  @Field(() => GraphQLISODateTime)
-  birthDate: Date;
+  @Field(() => GraphQLISODateTime, { nullable: true })
+  birthDate?: Date;
 
   @Field(() => Gender, {
     nullable: true,

@@ -19,7 +19,7 @@ export class UserEntity extends BaseModel {
   @Column()
   name: string;
 
-  @Column({ type: 'date' })
+  @Column({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   birthDate: Date;
 
   @Column({

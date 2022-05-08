@@ -9,11 +9,11 @@ export class UsersService {
   constructor(private readonly usersRepository: UsersRepository) {}
 
   async createUser(registerUserInput: RegisterUserInput): Promise<UserEntity> {
-    return await this.usersRepository.createUser(registerUserInput);
+    return this.usersRepository.createUser(registerUserInput);
   }
 
   async getAllUsers(): Promise<UserEntity[]> {
-    return await this.usersRepository.find();
+    return this.usersRepository.find();
   }
 
   async getUserById(id: string): Promise<UserEntity> {

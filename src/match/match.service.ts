@@ -9,6 +9,7 @@ import { ChatsRepository } from '../chat/repositories/chats.repository';
 import { ChatsEntity } from '../chat/entities/chats.entity';
 import { PUB_SUB } from '../pub_sub/pubSub.module';
 import { MATCH } from '../pub_sub/constants/constants';
+import { In, Not } from 'typeorm';
 
 @Injectable()
 export class MatchService {
@@ -76,5 +77,15 @@ export class MatchService {
     );
 
     return usersMatched;
+  }
+
+  async getUsersYetToBeLiked(userId: string): Promise<UserEntity[]> {
+    const userLikes = await this.likesRepository.find({
+      where: { userId, like: true },
+    });
+
+    return this.usersRepository.find({
+      where: { id: Not(In(userLikes.map((like) => like.judgedUserId))) },
+    });
   }
 }
